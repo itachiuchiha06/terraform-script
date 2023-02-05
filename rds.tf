@@ -1,6 +1,6 @@
 # creating RDS instance
 resource "aws_db_subnet_group" "default" {
-  name       = "ram_rds"
+  name       = "ram-rds"
   subnet_ids = [aws_subnet.ram_pub_sun.id, aws_subnet.ram_pvt_sun.id]
   tags = {
     Name = "my_DB_subnet_group"
