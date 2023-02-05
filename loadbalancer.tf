@@ -1,5 +1,5 @@
-resource "aws_lb_target_group" "target-elb" {
-  name     = "target-elb"
+resource "aws_lb_target_group" "target-lb" {
+  name     = "target-lb"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.ram.id
@@ -14,7 +14,7 @@ resource "aws_lb" "external-elb" {
 }
 # Attach the target group to load balaner
 resource "aws_lb_target_group_attachment" "attachment" {
-  target_group_arn = aws_lb_target_group.target-elb.arn
+  target_group_arn = aws_lb_target_group.target-lb.arn
   target_id        = aws_instance.project.id
   port             = "80"
   depends_on = [
@@ -22,7 +22,7 @@ resource "aws_lb_target_group_attachment" "attachment" {
   ]
 }
 resource "aws_lb_target_group_attachment" "attachment1" {
-  target_group_arn = aws_lb_target_group.target-elb.arn
+  target_group_arn = aws_lb_target_group.target-lb.arn
   target_id        = aws_instance.project2.id
   port             = 80
   depends_on = [
@@ -35,6 +35,6 @@ resource "aws_lb_listener" "external-elb" {
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.target-elb.arn
+    target_group_arn = aws_lb_target_group.target-lb.arn
   }
 }
